@@ -1,0 +1,11 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+body {
+    background:silver;
+}
+.wrapper {
+    min-height: 90vh;
+}

@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "View project authors";
+}
+
+<style>
+    table {
+        border-spacing: 0 15px;
+        align-self: center;
+    }
+
+    th {
+        background-color: #4287f5;
+        color: white;
+    }
+
+    th,
+    td {
+        width: 150px;
+        text-align: center;
+        border: none;
+        padding: 5px;
+    }
+
+    h2 {
+        color: #4287f5;
+    }
+
+    .submit-button {
+        position: absolute;
+        margin-left: 140px;
+    }
+</style>
+
+<script>
+    function ProcessForm() {
+        // Получаем значения полей
+        let fromValue = document.querySelector('[name="From"]')?.value || "";
+        let textValue = document.querySelector('[name="Text"]')?.value || "";
+
+        if (!fromValue.trim() || !textValue.trim()) {
+            alert("Заполните все поля!");
+            return;
+        }
+
+        // Формируем данные
+        let data = new FormData();
+        data.set("From", fromValue);
+        data.set("Text", textValue);
+
+        // Отправляем запрос через fetch
+        fetch(document.URL, {
+            method: "POST",
+            body: data
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Ошибка сервера: ${response.statusText}`);
+            }
+            return response.text();
+        })
+        .then(serverMessage => {
+            // Находим контейнер (заменил `container` на `main-block`)
+            let element = document.getElementById("main-block");
+            element.innerHTML = `<h5 style="text-align: center">${serverMessage}</h5>`;
+        })
+        .catch(error => {
+            console.error("Ошибка при отправке:", error);
+            alert("Ошибка при отправке данных. Попробуйте снова.");
+        });
+    }
+</script>
+
+<div id="main-block" class="text-center">
+    <div>
+        <h3 style="text-align: left">Оставьте отзыв о проекте здесь</h3>
+        <br>
+        <table>
+            <tr>
+                <td>Ваше имя</td>
+                <td><input type="text" name="From" /> </td>
+            </tr>
+            <tr>
+                <td>Ваш отзыв</td>
+                <td><input type="text" name="Text" /></td>
+            </tr>
+        </table>
+        <br>
+        <div class="submit-button">
+            <input type="submit" value="Отправить" onclick="ProcessForm()" />
+        </div>
+    </div>
+</div>
