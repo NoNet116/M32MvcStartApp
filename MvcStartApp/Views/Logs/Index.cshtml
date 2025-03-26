@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Логи";
+}
+<style>
+    table {
+        border-spacing: 0 15px;
+        border-collapse: collapse;
+        width: 80%; 
+        max-width: 800px; 
+        background-color: white;
+    }
+
+    th {
+        background-color: #4287f5;
+        color: white;
+    }
+
+    th, td {
+        width: 200px;
+        text-align: center;
+        border: 1px solid black;
+        padding: 10px;
+    }
+
+    h2 {
+        color: #4287f5;
+        text-align: center;
+    }
+</style>
+
+<div class="container text-center">
+    <h2 class="display-4">Логи проекта</h2>
+    <br>
+
+    <!-- Центрируем таблицу -->
+    <div class="d-flex justify-content-center">
+        <table>
+            <tr>
+                <th>Идентификатор</th>
+                <th>Дата обращения</th>
+                <th>Ссылка</th>
+            </tr>
+            @foreach (var request in Model)
+            {
+                <tr>
+                    <td>@request.Id</td>
+                    <td>@request.Date</td>
+                    <td>@request.Url</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
